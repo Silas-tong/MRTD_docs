@@ -37,10 +37,19 @@ body {
 }
 
 /* 主容器：卡片式布局 */
+/* 标题：不缩进，靠左 */
 body > h1,
 body > h2,
 body > h3,
-body > h4,
+body > h4 {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/* 正文内容：相对标题一级缩进 */
 body > p,
 body > ul,
 body > ol,
@@ -48,10 +57,10 @@ body > table,
 body > blockquote,
 body > pre,
 body > hr {
-  max-width: 900px;
+  max-width: 860px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 40px;
+  padding-left: 72px;
   padding-right: 40px;
 }
 
@@ -219,17 +228,20 @@ img {
   box-shadow: 0 2px 8px rgba(31, 35, 40, 0.08);
 }
 
-/* 图注样式：紧跟图片的引用块 */
-img + blockquote,
-p img + blockquote {
-  margin: -0.5em 0 1.5em 0;
-  padding: 0;
-  border-left: none;
-  background: none;
-  color: var(--text-secondary);
-  font-size: 0.9em;
+/* 图注样式 */
+p.caption {
   text-align: center;
-  max-width: none;
+  color: var(--text-color);
+  font-size: 0.95em;
+  font-weight: 500;
+  margin: -0.5em auto 1.5em auto;
+  padding: 0;
+  max-width: 860px;
+}
+
+p.caption strong {
+  color: var(--text-color);
+  font-weight: 600;
 }
 
 /* 代码 */
@@ -321,7 +333,11 @@ strong {
   body > h1,
   body > h2,
   body > h3,
-  body > h4,
+  body > h4 {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   body > p,
   body > ul,
   body > ol,
@@ -329,7 +345,7 @@ strong {
   body > blockquote,
   body > pre,
   body > hr {
-    padding-left: 20px;
+    padding-left: 40px;
     padding-right: 20px;
   }
 
