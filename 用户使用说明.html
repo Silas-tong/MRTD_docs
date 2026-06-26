@@ -4,10 +4,366 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>热像仪测试系统 用户使用说明</title>
-<link rel="stylesheet" href="style.css">
+<style>
+:root {
+  --primary: #1a5fb4;
+  --primary-dark: #0d3b7a;
+  --primary-light: #eef4fc;
+  --bg: #f5f7fa;
+  --card-bg: #ffffff;
+  --text: #2d3748;
+  --text-muted: #718096;
+  --border: #e2e8f0;
+  --sidebar-width: 280px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* 侧边栏 */
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--card-bg);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 28px 20px;
+  z-index: 100;
+}
+
+.sidebar-header {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  line-height: 1.4;
+  margin: 0 0 6px;
+}
+
+.sidebar-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.toc {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc li {
+  margin: 2px 0;
+}
+
+.toc a {
+  display: block;
+  padding: 7px 10px;
+  color: var(--text);
+  border-radius: 6px;
+  font-size: 13px;
+  transition: all 0.15s;
+}
+
+.toc a:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.toc-h2 {
+  font-weight: 600;
+}
+
+.toc-h3 {
+  padding-left: 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* 主内容区 */
+.main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: 40px 48px;
+}
+
+.content {
+  max-width: 860px;
+  background: var(--card-bg);
+  padding: 48px 56px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+/* 标题 */
+h1 {
+  font-size: 34px;
+  color: var(--primary-dark);
+  margin: 0 0 12px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid var(--primary);
+}
+
+h2 {
+  font-size: 24px;
+  color: var(--primary-dark);
+  margin-top: 48px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+h3 {
+  font-size: 18px;
+  color: var(--primary);
+  margin-top: 32px;
+  margin-bottom: 14px;
+}
+
+p, ul, ol {
+  margin: 14px 0;
+}
+
+ul, ol {
+  padding-left: 26px;
+}
+
+li {
+  margin: 8px 0;
+}
+
+/* 表格 */
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 22px 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+table.data-table th {
+  background: #f1f5f9;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--border);
+}
+
+table.data-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+table.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+table.data-table tr:hover td {
+  background: #fafbfc;
+}
+
+/* 图片与图注 */
+figure {
+  margin: 28px 0;
+  text-align: center;
+}
+
+figure img {
+  max-width: 100%;
+  height: auto;
+  max-height: 520px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+figcaption {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* PS 提示卡片 */
+.ps-note {
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  padding: 14px 18px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.ps-note > p {
+  margin: 0 0 8px;
+}
+
+.ps-note > p:first-child {
+  margin-bottom: 0;
+}
+
+.ps-note ol, .ps-note ul {
+  margin: 10px 0 0;
+  padding-left: 22px;
+}
+
+.ps-note li {
+  margin: 5px 0;
+}
+
+.ps-note strong {
+  color: #b45309;
+}
+
+/* 代码与强调 */
+code {
+  background: #edf2f7;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.92em;
+}
+
+strong {
+  color: #1a202c;
+}
+
+/* 分隔线 */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 40px 0;
+}
+
+/* 返回顶部 */
+.back-to-top {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  width: 44px;
+  height: 44px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(26,95,180,0.3);
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.back-to-top:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+/* 响应式 */
+@media (max-width: 992px) {
+  .sidebar {
+    display: none;
+  }
+  .main {
+    margin-left: 0;
+    padding: 24px;
+  }
+  .content {
+    padding: 28px;
+  }
+}
+
+@media print {
+  .sidebar, .back-to-top {
+    display: none;
+  }
+  .main {
+    margin-left: 0;
+  }
+  .content {
+    box-shadow: none;
+  }
+}
+</style>
 </head>
 <body>
-<h1 id="热像仪测试系统-用户使用说明">热像仪测试系统 用户使用说明</h1>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">热像仪测试系统</div>
+      <div class="sidebar-subtitle">用户使用说明</div>
+    </div>
+    <ul class="toc">
+<li class="toc-h2"><a href="#目录">目录</a></li>
+<li class="toc-h2"><a href="#第-1-章-产品概述">第 1 章 产品概述</a></li>
+<li class="toc-h3"><a href="#1.1-版本信息">1.1 版本信息</a></li>
+<li class="toc-h3"><a href="#1.2-产品简介">1.2 产品简介</a></li>
+<li class="toc-h3"><a href="#1.3-适用场景">1.3 适用场景</a></li>
+<li class="toc-h3"><a href="#1.4-运行环境">1.4 运行环境</a></li>
+<li class="toc-h3"><a href="#1.5-核心术语表">1.5 核心术语表</a></li>
+<li class="toc-h3"><a href="#1.6-产品外观">1.6 产品外观</a></li>
+<li class="toc-h2"><a href="#第-2-章-快速开始">第 2 章 快速开始</a></li>
+<li class="toc-h3"><a href="#2.0-软件安装">2.0 软件安装</a></li>
+<li class="toc-h3"><a href="#2.1-启动与系统自检">2.1 启动与系统自检</a></li>
+<li class="toc-h3"><a href="#2.2-主界面区域说明">2.2 主界面区域说明</a></li>
+<li class="toc-h2"><a href="#第-3-章-核心功能使用指南">第 3 章 核心功能使用指南</a></li>
+<li class="toc-h3"><a href="#3.1-MRTD-测量">3.1 MRTD 测量</a></li>
+<li class="toc-h3"><a href="#3.2-SITF-测量">3.2 SITF 测量</a></li>
+<li class="toc-h3"><a href="#3.3-NETD-测量">3.3 NETD 测量</a></li>
+<li class="toc-h3"><a href="#3.4-光轴一致性测量">3.4 光轴一致性测量</a></li>
+<li class="toc-h2"><a href="#第-4-章-硬件与视频控制">第 4 章 硬件与视频控制</a></li>
+<li class="toc-h3"><a href="#4.1-黑体控制">4.1 黑体控制</a></li>
+<li class="toc-h3"><a href="#4.2-视频源控制">4.2 视频源控制</a></li>
+<li class="toc-h2"><a href="#第-5-章-数据管理与报告生成">第 5 章 数据管理与报告生成</a></li>
+<li class="toc-h3"><a href="#5.1-历史数据查询">5.1 历史数据查询</a></li>
+<li class="toc-h3"><a href="#5.2-报告生成与导出">5.2 报告生成与导出</a></li>
+<li class="toc-h2"><a href="#第-6-章-常见问题与故障排除">第 6 章 常见问题与故障排除</a></li>
+<li class="toc-h3"><a href="#6.1-连接与通讯异常">6.1 连接与通讯异常</a></li>
+<li class="toc-h3"><a href="#6.2-图像与视频问题">6.2 图像与视频问题</a></li>
+<li class="toc-h3"><a href="#6.3-测量与计算问题">6.3 测量与计算问题</a></li>
+<li class="toc-h3"><a href="#6.4-日志查看与故障上报">6.4 日志查看与故障上报</a></li>
+<li class="toc-h2"><a href="#第-7-章-获取帮助与反馈">第 7 章 获取帮助与反馈</a></li>
+</ul>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <h1 id="热像仪测试系统-用户使用说明">热像仪测试系统 用户使用说明</h1>
 <h2 id="目录">目录</h2>
 <ul>
 <li><a href="#第-1-章-产品概述">第 1 章 产品概述</a></li>
@@ -20,7 +376,7 @@
 </ul>
 <h2 id="第-1-章-产品概述">第 1 章 产品概述</h2>
 <h3 id="1.1-版本信息">1.1 版本信息</h3>
-<table>
+<table class="data-table">
 <thead>
 <tr>
 <th>版本</th>
@@ -40,15 +396,15 @@
 </table>
 <hr />
 <h3 id="1.2-产品简介">1.2 产品简介</h3>
-<p>本系统为室内外环境下的红外热像仪光学性能测试设计，可完成 <strong>MRTD</strong>、<strong>NETD</strong> 等核心参数的测量。系统使用传统的人工判读模式，测试完成后可生成 PDF 报告。</p>
+<p>本系统为室内外环境下的红外热像仪光学性能测试设计，可完成 <strong>MRTD</strong>、<strong>NETD</strong> 等核心参数的测量。系统为半自动测量模式，测试完成后可自主选择生成 excel/PDF 报告。</p>
 <h3 id="1.3-适用场景">1.3 适用场景</h3>
 <ul>
 <li>实验室/产线环境下的热像装备出厂检验与性能标定</li>
 <li>研发阶段光学参数验证与对比分析</li>
-<li>第三方检测机构的标准化性能测试</li>
+<li>便于外带测量,搭建使用相较台式便利</li>
 </ul>
 <h3 id="1.4-运行环境">1.4 运行环境</h3>
-<table>
+<table class="data-table">
 <thead>
 <tr>
 <th>类别</th>
@@ -62,11 +418,11 @@
 </tr>
 <tr>
 <td><strong>硬件配置</strong></td>
-<td>台式工控机（推荐 8GB+ 内存，独立显卡）</td>
+<td>笔记本电脑（推荐 8GB+ 内存，独立显卡）</td>
 </tr>
 <tr>
 <td><strong>外设依赖</strong></td>
-<td>视频源（USB/网口）与标准黑体</td>
+<td>视频源(被测热像仪或者相机)与标准黑体等一套测量设备</td>
 </tr>
 <tr>
 <td><strong>软件依赖</strong></td>
@@ -75,7 +431,7 @@
 </tbody>
 </table>
 <h3 id="1.5-核心术语表">1.5 核心术语表</h3>
-<table>
+<table class="data-table">
 <thead>
 <tr>
 <th>术语</th>
@@ -102,52 +458,58 @@
 </tbody>
 </table>
 <h3 id="1.6-产品外观">1.6 产品外观</h3>
-<p><img src="./image/图%201.6.1%20产品正面图.jpg" alt="图 1.6.1 产品正面图" width="50%"></p>
-<p class="caption"><strong>图 1.6.1 产品正面图</strong></p>
+<figure>
+  <img src="./image/图%201.6.1%20产品正面图.jpg" alt="图 1.6.1 产品正面图" width="50%">
+  <figcaption>图 1.6.1 产品正面图</figcaption>
+</figure>
 
-<p><img src="./image/图%201.6.2%20产品侧面图.png" alt="图 1.6.2 产品侧面图" width="50%"></p>
-<p class="caption"><strong>图 1.6.2 产品侧面图</strong></p>
+<figure>
+  <img src="./image/图%201.6.2%20产品侧面图.png" alt="图 1.6.2 产品侧面图" width="50%">
+  <figcaption>图 1.6.2 产品侧面图</figcaption>
+</figure>
 
-<p><img src="./image/图%201.6.3%20接口线图.jpg" alt="图 1.6.3 接口线图" width="50%"></p>
-<p class="caption"><strong>图 1.6.3 接口线图</strong></p>
+<figure>
+  <img src="./image/图%201.6.3%20接口线图.jpg" alt="图 1.6.3 接口线图" width="50%">
+  <figcaption>图 1.6.3 接口线图</figcaption>
+</figure>
 
-<blockquote>
-<p><strong>注</strong>：前方的保护盖自带激光寻像装置，采用低压 12V 供电，插电 USB 供电；用于帮助对准平行光管中心位置。</p>
-</blockquote>
-<hr />
+<div class="ps-note">
+  <p><strong>PS：</strong>前方保护盖自带激光寻像装置，采用低压 12V USB 供电，用于帮助对准平行光管中心位置。</p>
+</div><hr />
 <h2 id="第-2-章-快速开始">第 2 章 快速开始</h2>
+<h3 id="2.0-软件安装">2.0 软件安装</h3>
+<ol>
+<li>双击 setup 安装程序，依照步骤完成安装。</li>
+</ol>
 <h3 id="2.1-启动与系统自检">2.1 启动与系统自检</h3>
 <ol>
-<li>
-<p>双击桌面或安装目录下的 <code>红外热像仪综合性能测试系统.exe</code> 启动程序。</p>
-</li>
-<li>
-<p>首次启动需要等待约 1 分钟，系统加载依赖环境并进入初始界面。</p>
-</li>
-<li>
-<p>系统启动后，在日志区域会显示与硬件的连接状态：</p>
-</li>
+<li>双击桌面或安装目录下的 exe 启动程序。</li>
+<li>首次启动需要等待约 1 分钟，第一次启动若无授权文件，会进入授权门：</li>
+<li>点击 <strong>复制机器码</strong>，将机器码发送给技术支持人员，获取授权文件；</li>
+<li>点击 <strong>导入授权文件</strong>，选择刚获取到的文件；</li>
+<li>授权通过后，显示弹窗，即可正常进入软件。</li>
+<li>系统加载依赖环境并进入初始界面，在日志部分显示当前的硬件连接状态。</li>
+<li>点击菜单栏 <strong>工具 → 连接助手</strong>，选择对应的串口进行连接；连接成功后，日志区会刷新连接状态。</li>
 </ol>
-<p><img src="./image/图%202.1.1系统主界面及日志区域示意.png" alt="图 2.1.1 系统主界面及日志区域示意" width="50%"></p>
-<p class="caption"><strong>图 2.1.1 系统主界面及日志区域示意</strong></p>
+<figure>
+  <img src="./image/图%202.1.1系统主界面及日志区域示意.png" alt="图 2.1.1 系统主界面及日志区域示意" width="50%">
+  <figcaption>图 2.1.1 系统主界面及日志区域示意</figcaption>
+</figure>
 
-<ol>
-<li>点击顶部菜单栏 <strong>工具 → 连接助手</strong>，打开连接配置窗口。</li>
-</ol>
-<p><img src="./image/图%202.1.2连接助手界面.png" alt="图 2.1.2 连接助手界面" width="50%"></p>
-<p class="caption"><strong>图 2.1.2 连接助手界面</strong></p>
+<figure>
+  <img src="./image/图%202.1.2连接助手界面.png" alt="图 2.1.2 连接助手界面" width="50%">
+  <figcaption>图 2.1.2 连接助手界面</figcaption>
+</figure>
 
-<ol>
-<li>若出现通讯异常，请参考以下方法解决：</li>
-<li>检查串口号、波特率等参数是否与硬件实际配置一致。</li>
-<li>检查对应硬件的电源线、串口/USB 数据线是否松动，可用第三方串口调试工具验证硬件是否能正常响应。</li>
-<li>确认无误后，点击 <strong>连接</strong>。</li>
-</ol>
+<p class="caption"><strong>图 2.1.3 日志刷新连接状态</strong></p>
+
 <h3 id="2.2-主界面区域说明">2.2 主界面区域说明</h3>
-<p><img src="./image/图%202.2.1%20主界面区域划分总览图.png" alt="图 2.2.1 主界面区域划分总览图" width="50%"></p>
-<p class="caption"><strong>图 2.2.1 主界面区域划分总览图</strong></p>
+<figure>
+  <img src="./image/图%202.2.1%20主界面区域划分总览图.png" alt="图 2.2.1 主界面区域划分总览图" width="50%">
+  <figcaption>图 2.2.1 主界面区域划分总览图</figcaption>
+</figure>
 
-<table>
+<table class="data-table">
 <thead>
 <tr>
 <th>区域</th>
@@ -188,61 +550,40 @@
 </tr>
 </tbody>
 </table>
-<p><img src="./image/图%202.2.2%20图像显示区细节示意（含%20ROI%20框选%29.png" alt="图 2.2.2 图像显示区细节示意（含 ROI 框选）" width="50%"></p>
-<p class="caption"><strong>图 2.2.2 图像显示区细节示意（含 ROI 框选）</strong></p>
+<figure>
+  <img src="./image/图%202.2.2%20图像显示区细节示意（含%20ROI%20框选%29.png" alt="图 2.2.2 图像显示区细节示意（含 ROI 框选）" width="50%">
+  <figcaption>图 2.2.2 图像显示区细节示意（含 ROI 框选）</figcaption>
+</figure>
 
-<blockquote>
-<p><strong>注</strong>：</p>
-<ol>
-<li>
-<p><strong>鼠标右键单击出现选框，可拖动和一定程度上缩放选框；按住 Ctrl 拖动会复制一个选框到指定位置（在图像上，最多只会出现两个选框，新的覆盖旧的）；在左键单击选中选框的前提下，按 Del 键可以删除选中的选框。</strong></p>
-</li>
-<li>
-<p><strong>鼠标滚轮可以缩放图像（有一定缩放大小限制），默认情况下是以光标所在地为中心进行缩放，按住 Ctrl 可以快速将图像居中缩放。</strong></p>
-</li>
+<div class="ps-note">
+  <p><strong>PS：</strong></p>
+  <ol>
+<li>鼠标右键单击出现选框，可拖动选框并在选框线边缘调整大小；</li>
+<li>按住 <strong>Ctrl</strong> 拖动会复制一个选框到指定位置（图像上最多同时存在两个选框，新选框会覆盖旧选框）；</li>
+<li>左键单击选中选框后，按 <strong>Del</strong> 键可删除该选框；</li>
+<li>鼠标滚轮可缩放图像（有缩放范围限制），默认以光标所在位置为中心缩放；按住 <strong>Ctrl</strong> 可快速将图像居中缩放。</li>
 </ol>
-</blockquote>
-<h2 id="第-3-章-核心功能使用指南">第 3 章 核心功能使用指南</h2>
+</div><h2 id="第-3-章-核心功能使用指南">第 3 章 核心功能使用指南</h2>
 <h3 id="3.1-MRTD-测量">3.1 MRTD 测量</h3>
 <ul>
-<li>
-<p><strong>使用场景</strong>：评估系统在不同空间频率下的最小可分辨温差。</p>
-</li>
-<li>
-<p><strong>操作步骤</strong>：</p>
-</li>
-<li>
-<p>进入 <strong>MRTD 测量</strong> 模块，选择当前测试的 <code>空间频率</code>（对应不同靶标）。</p>
-</li>
-<li>
-<p>设定 <code>靶标温差</code>。</p>
-</li>
-<li>
-<p>修改 <strong>正温差</strong> → 设定正温差 → 等待黑体温度稳定 → 观察是否能分辨。</p>
-</li>
-<li>
-<p>修改 <strong>负温差</strong> → 设定负温差 → 等待黑体温度稳定 → 观察是否能分辨。</p>
-</li>
-<li>
-<p>更换观察员或改变温差，重复上述两个步骤，直至达到该频率下的分辨极限。</p>
-</li>
-<li>
-<p>点击 <strong>记录数据</strong>，将当前的正温差值、负温差值以及空间频率值记录在表格内，自动得到 MRTD 值。</p>
-</li>
-<li>
-<p>可以进行多次测量和记录，支持 <strong>计算均值</strong>。</p>
-</li>
-<li>
-<p>切换至下一空间频率，重复上述流程。</p>
-<p><img src="./image/图%203.1.1%20MRTD%20测试结果记录表.png" alt="图 3.1.1 MRTD 测试结果记录表" width="50%"></p>
-</li>
+<li><strong>使用场景</strong>：评估系统在不同空间频率下的最小可分辨温差。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入 <strong>MRTD 测量</strong> 模块，选择当前测试的 <code>空间频率</code>（对应不同靶标）。</li>
+<li>设定 <code>靶标温差</code>。</li>
+<li>修改 <strong>正温差</strong> → 设定正温差 → 等待黑体温度稳定 → 观察是否能分辨。</li>
+<li>修改 <strong>负温差</strong> → 设定负温差 → 等待黑体温度稳定 → 观察是否能分辨。</li>
+<li>更换观察员或改变温差，重复上述两个步骤，直至达到该频率下的分辨极限。</li>
+<li>点击 <strong>记录数据</strong>，将当前的正温差值、负温差值以及空间频率值记录在表格内，自动得到 MRTD 值。</li>
+<li>可以进行多次测量和记录，支持 <strong>计算均值</strong>。</li>
 </ul>
-<p class="caption"><strong>图 3.1.1 MRTD 测试结果记录表</strong></p>
+<figure>
+  <img src="./image/图%203.1.1%20MRTD%20测试结果记录表.png" alt="图 3.1.1 MRTD 测试结果记录表" width="50%">
+  <figcaption>图 3.1.1 MRTD 测试结果记录表</figcaption>
+</figure>
 
-<blockquote>
-<p><strong>提示</strong>：MRTD 为人工判读项目，需由经过训练的观察员在标准观察条件下进行。</p>
-</blockquote>
-<h3 id="3.2-SITF-测量">3.2 SITF 测量</h3>
+<div class="ps-note">
+  <p><strong>PS：</strong>MRTD 为人工判读项目，不同观察员之间可能存在判别误差，建议由三名观察员分别测试后取平均值。</p>
+</div><h3 id="3.2-SITF-测量">3.2 SITF 测量</h3>
 <ul>
 <li>
 <p><strong>使用场景</strong>：测量信号传递函数，建立温差-灰度响应曲线，为 NETD 计算提供线性区参数。</p>
@@ -251,28 +592,35 @@
 <p><strong>操作步骤</strong>：</p>
 </li>
 <li>
-<p>进入 <strong>SITF 测试</strong> 模块，在 NETD 模块内，设置 <code>最大温差</code>、<code>最小温差</code>、<code>采样步长</code>。</p>
-<p><img src="./image/图%203.2.1%20SITF%20测试模块界面.png" alt="图 3.2.1 SITF 测试模块界面" width="50%"></p>
+<p>在视频采集区域选择连接方式，点击 <strong>开始采集</strong>，在左侧图像显示区获取实时图像。</p>
 </li>
+<li>使用半月靶标，在图像上显示出半月形图像；通过鼠标滚轮缩放，将图像调整到合适大小并尽量居中。</li>
+<li>点击鼠标右键，出现方形选框；拖动选框边缘可调整大小，将选框调整到可覆盖半月靶标目标测量区域的位置和大小。</li>
+<li>长按键盘 <strong>Ctrl</strong> 键，同时用鼠标左键拖动选框，松开时会在光标位置生成一个与原选框大小一致的新选框；调整两选框位置，尽量保持对称。</li>
+<li>在 SITF 测量区域设置最大温差、最小温差及采样步长等参数，点击 <strong>确认框选</strong> → <strong>开始记录</strong>，系统自动进行测量，进度可在日志和右侧表格中查看。</li>
+<li>系统自动测量完成后，会根据表格数据自动生成 SITF 曲线图；用鼠标选取处于线性区域的首尾两点，自动计算得到该两点区域内的斜率值。</li>
 </ul>
-<p class="caption"><strong>图 3.2.1 SITF 测试模块界面</strong></p>
-
-<ol>
-<li><strong>框选 ROI</strong>：在图像显示区右键调出黄色框选框，分别框选半月靶的 <code>空心区</code> 与 <code>实心区</code>（可用鼠标滚轮缩放图像辅助）。</li>
+<div class="ps-note">
+  <p><strong>PS：</strong></p>
+  <ol>
+<li>支持单点测量：手动设置黑体温度参数和单点温差，点击 <strong>单点记录</strong>，右侧图表会记录当前的温差和灰度差值。</li>
+<li>支持手动修改和添加数据：在 SITF 数据表格上方有 <strong>添加行</strong>、<strong>删除行</strong> 和 <strong>手动更新曲线图</strong> 选项，可按需手动修改数据并生成曲线。</li>
+<li>SITF 曲线图下方提供 <strong>重新选区</strong>（自动清除图像显示区的选框）、<strong>清除数据</strong>（清空 SITF 表格数据）和 <strong>保存报告</strong>（可保存为 Excel/PDF 格式报告）功能。</li>
 </ol>
-<p><img src="./image/图%203.2.2%20ROI%20框选操作示意（空心区与实心区）.png" alt="图 3.2.2 ROI 框选操作示意（空心区与实心区）" width="50%"></p>
-<p class="caption"><strong>图 3.2.2 ROI 框选操作示意（空心区与实心区）</strong></p>
+</div><figure>
+  <img src="./image/图%203.2.1%20SITF%20测试模块界面.png" alt="图 3.2.1 SITF 测试模块界面" width="50%">
+  <figcaption>图 3.2.1 SITF 测试模块界面</figcaption>
+</figure>
 
-<ol>
-<li>
-<p>依次点击 <strong>确认框选</strong>、<strong>开始记录</strong>，系统将按步长自动调节黑体温度并采集灰度数据，右侧表格逐行填充温差-灰度值。</p>
-</li>
-<li>
-<p>采样完成后，右侧区域自动生成 SITF 曲线图，在 SITF 图谱曲线上手动点击首尾两点确定线性区间，自动计算得到斜率。</p>
-</li>
-</ol>
-<p><img src="./image/图%203.2.3%20SITF%20曲线图.png" alt="图 3.2.3 SITF 曲线图" width="50%"></p>
-<p class="caption"><strong>图 3.2.3 SITF 曲线图</strong></p>
+<figure>
+  <img src="./image/图%203.2.2%20ROI%20框选操作示意（空心区与实心区）.png" alt="图 3.2.2 ROI 框选操作示意（空心区与实心区）" width="50%">
+  <figcaption>图 3.2.2 ROI 框选操作示意（空心区与实心区）</figcaption>
+</figure>
+
+<figure>
+  <img src="./image/图%203.2.3%20SITF%20曲线图.png" alt="图 3.2.3 SITF 曲线图" width="50%">
+  <figcaption>图 3.2.3 SITF 曲线图</figcaption>
+</figure>
 
 <h3 id="3.3-NETD-测量">3.3 NETD 测量</h3>
 <ul>
@@ -286,29 +634,17 @@
 <p><strong>操作步骤</strong>：</p>
 </li>
 <li>
-<p>进入 <strong>NETD 测量</strong> 模块，确认 SITF 斜率值已自动计算获得或手动输入。</p>
+<p>在图像显示区调整需要测量背景噪声的选框区域（基本操作与 SITF 选框类似；若图像上有两个选框，可左键选中后按 <strong>Delete</strong> 键删除）。</p>
 </li>
-<li>
-<p>设置 <code>采样次数</code>（默认 30 次）。</p>
-</li>
-<li>
-<p>调整选框，使得图像上仅有一个选框，并且框选到黑体光源面。</p>
-<p><img src="./image/图%203.3%20选框示意图.png" alt="图 3.3 选框示意图" width="50%"></p>
-</li>
+<li>设置采样次数（一般默认为 30 次），点击 <strong>测量噪声</strong>；日志会显示测量过程，结束后自动获得噪声灰度值。</li>
+<li>在已有 SITF 斜率值和噪声值的前提下，点击 <strong>计算 NETD 值</strong>，系统自动计算并显示最终 NETD 值。</li>
+<li>如需保存，点击 <strong>保存报告</strong>。</li>
 </ul>
-<p class="caption"><strong>图 3.3 选框示意图</strong></p>
+<figure>
+  <img src="./image/图%203.3%20选框示意图.png" alt="图 3.3 选框示意图" width="50%">
+  <figcaption>图 3.3 选框示意图</figcaption>
+</figure>
 
-<ol>
-<li>
-<p>点击 <strong>测量噪声</strong>，系统采集多帧图像并计算噪声均方根值。</p>
-</li>
-<li>
-<p>点击 <strong>计算 NETD 值</strong>，系统自动计算并显示最终 NETD 值。</p>
-</li>
-<li>
-<p>如需保存，点击 <strong>保存报告</strong>。</p>
-</li>
-</ol>
 <h3 id="3.4-光轴一致性测量">3.4 光轴一致性测量</h3>
 <ul>
 <li>
@@ -320,136 +656,117 @@
 <li>
 <p>进入 <strong>光轴一致性</strong> 模块，输入以下参数：</p>
 <ul>
-<li><code>水平视场</code></li>
-<li><code>垂直视场</code></li>
-<li><code>水平分辨率</code></li>
-<li><code>垂直分辨率</code></li>
-</ul>
-<blockquote>
-<p><strong>注</strong>：两个参数是指两次不同的条件下进行的两次不同的测试，比如因变焦导致的视场角变化，或直接移动视场角。</p>
-</blockquote>
+<li>
+<p><code>水平视场</code></p>
 </li>
 <li>
-<p>在图像区域有产品本身的十字线和靶标成像的十字线，用选框边角对上十字线，点击对应的采集（产品采集/靶标采集），获取一组十字坐标。</p>
-<p><img src="./image/图%203.4.1%20光轴一致性测量.png" alt="图 3.4.1 光轴一致性测量" width="50%"></p>
+<p><code>垂直视场</code></p>
+</li>
+<li>
+<p><code>水平分辨率</code></p>
+</li>
+<li>
+<p><code>垂直分辨率</code>
+   <strong>PS</strong>：上述参数用于两次不同条件下的测试，例如因变焦导致的视场角变化，或直接移动视场角后重新测量。</p>
 </li>
 </ul>
-<p class="caption"><strong>图 3.4.1 获取十字坐标框选示意</strong></p>
+</li>
+</ul>
+<figure>
+  <img src="./image/图%203.4.1%20光轴一致性测量.png" alt="图 3.4.1 光轴一致性测量" width="50%">
+  <figcaption>图 3.4.1 光轴一致性测量</figcaption>
+</figure>
 
 <ol>
-<li>
-<p>在不同的测试条件下（参数二），重复以上步骤，同样获取一组十字坐标。</p>
-</li>
-<li>
-<p>点击 <strong>计算</strong>，系统自动计算得到 X 和 Y 方向上的偏差值。</p>
-</li>
+<li>在不同的测试条件下（参数二），重复以上步骤，同样获取一组十字坐标。</li>
 </ol>
-<p><img src="./image/图%203.4.2%20光轴一致性测量.png" alt="图 3.4.2 光轴一致性测量" width="50%"></p>
-<p class="caption"><strong>图 3.4.2 光轴一致性测量</strong></p>
+<figure>
+  <img src="./image/图%203.4.2%20光轴一致性测量.png" alt="图 3.4.2 光轴一致性测量" width="50%">
+  <figcaption>图 3.4.2 光轴一致性测量</figcaption>
+</figure>
 
 <hr />
 <h2 id="第-4-章-硬件与视频控制">第 4 章 硬件与视频控制</h2>
-<blockquote>
-<p>适用于调试、维护或单独校准场景，无需进入具体测试模块即可操作。</p>
-</blockquote>
-<h3 id="4.1-黑体控制">4.1 黑体控制</h3>
+<div class="ps-note">
+  <p><strong>PS：</strong>本章功能适用于调试、维护或单独校准场景，无需进入具体测试模块即可操作。</p>
+</div><h3 id="4.1-黑体控制">4.1 黑体控制</h3>
 <ul>
-<li>
-<p><strong>功能</strong>：独立设定黑体温度与温差。</p>
-</li>
-<li>
-<p><strong>入口</strong>：顶部菜单栏 <strong>工具 → 硬件控制 → 黑体控制</strong>。</p>
-</li>
+<li><strong>功能</strong>：独立设定黑体温度与温差。</li>
 </ul>
-<p><img src="./image/图%204.1%20黑体独立控制面板.png" alt="图 4.1 黑体独立控制面板" width="50%"></p>
-<p class="caption"><strong>图 4.1 黑体独立控制面板</strong></p>
+<figure>
+  <img src="./image/图%204.1%20黑体独立控制面板.png" alt="图 4.1 黑体独立控制面板" width="50%">
+  <figcaption>图 4.1 黑体独立控制面板</figcaption>
+</figure>
 
 <h3 id="4.2-视频源控制">4.2 视频源控制</h3>
 <ul>
-<li>
-<p><strong>功能</strong>：用于接受热像仪镜头的成像，可更改外设连接的端口，能录制和截图，支持本地视频回放。</p>
-</li>
-<li>
-<p><strong>入口</strong>：顶部菜单栏 <strong>工具 → 硬件控制 → 视频源控制</strong>。</p>
-</li>
-<li>
-<p><strong>连接方式</strong>：</p>
-</li>
+<li><strong>功能</strong>：用于接受热像仪镜头的成像，可更改外设连接的端口，能录制和截图，支持本地视频回放。</li>
+<li><strong>入口</strong>：顶部菜单栏 <strong>文件 → 导入视频源</strong>。</li>
 </ul>
-<p><img src="./image/图%204.2.1%20网口连接方式.png" alt="图 4.2.1 网口连接方式" width="50%"></p>
-<p class="caption"><strong>图 4.2.1 网口连接方式</strong></p>
+<figure>
+  <img src="./image/图%204.2.1%20网口连接方式.png" alt="图 4.2.1 网口连接方式" width="50%">
+  <figcaption>图 4.2.1 网口连接方式</figcaption>
+</figure>
 
-<p><img src="./image/图%204.2.2%20usb连接方式.png" alt="图 4.2.2 USB 连接方式" width="50%"></p>
-<p class="caption"><strong>图 4.2.2 USB 连接方式</strong></p>
+<figure>
+  <img src="./image/图%204.2.2%20usb连接方式.png" alt="图 4.2.2 USB 连接方式" width="50%">
+  <figcaption>图 4.2.2 USB 连接方式</figcaption>
+</figure>
 
-<ul>
-<li><strong>本地视频源操作方式</strong>：顶部菜单栏 <strong>文件 → 导入视频源</strong>。</li>
-</ul>
-<p><img src="./image/图%204.2.3%20本地视频导入播放.png" alt="图 4.2.3 本地视频导入播放" width="50%"></p>
-<p class="caption"><strong>图 4.2.3 本地视频导入播放</strong></p>
+<figure>
+  <img src="./image/图%204.2.3%20本地视频导入播放.png" alt="图 4.2.3 本地视频导入播放" width="50%">
+  <figcaption>图 4.2.3 本地视频导入播放</figcaption>
+</figure>
 
 <hr />
 <h2 id="第-5-章-数据管理与报告生成">第 5 章 数据管理与报告生成</h2>
 <h3 id="5.1-历史数据查询">5.1 历史数据查询</h3>
-<ol>
-<li>点击页面导航栏的 <strong>数据查询</strong> 标签，进入历史数据管理界面。</li>
-</ol>
-<p><img src="./image/图%205.1.1数据查询模块界面.png" alt="图 5.1.1 数据查询模块界面" width="50%"></p>
-<p class="caption"><strong>图 5.1.1 数据查询模块界面</strong></p>
-<blockquote>
-<p><strong>注</strong>：这里的每次打开会记录上次的文档列表，但是并不会自动更新，所以需要刷新列表用于同步；如果存放文档的目录发生变化，则需要手动选择目录。</p>
-</blockquote>
-<ol>
-<li>
-<p>筛选区支持按 <code>文件名</code>、<code>类型</code>、<code>时间</code> 筛选。</p>
-</li>
-<li>
-<p>单击列表中的数据，在右侧出现该次测试报告的概述内容。</p>
-</li>
-</ol>
-<p><img src="./image/图%205.1.2%20数据概括.png" alt="图 5.1.2 数据概括" width="50%"></p>
-<p class="caption"><strong>图 5.1.2 数据概括</strong></p>
+<figure>
+  <img src="./image/图%205.1.1数据查询模块界面.png" alt="图 5.1.1 数据查询模块界面" width="50%">
+  <figcaption>图 5.1.1 数据查询模块界面</figcaption>
+</figure>
 
-<ol>
-<li>双击选中的数据，可以打开文件详情。</li>
+<ul>
+<li><strong>操作步骤</strong>：</li>
+<li>单击列表中的数据行，可在右侧查看该文件的简要信息概述。</li>
+<li>双击选中的数据行，可以打开文件所在位置，查看详情。</li>
+</ul>
+<div class="ps-note">
+  <p><strong>PS：</strong></p>
+  <ol>
+<li>每次打开会记录上次的文档列表，但不会自动更新，因此需要点击 <strong>刷新列表</strong> 同步最新文件。</li>
+<li>如果文档存放目录发生变化，需点击 <strong>选择目录并同步索引</strong>，重新指定报告存放位置。</li>
+<li>支持按文件名、类型、时间进行筛选。</li>
 </ol>
+</div><figure>
+  <img src="./image/图%205.1.2%20数据概括.png" alt="图 5.1.2 数据概括" width="50%">
+  <figcaption>图 5.1.2 数据概括</figcaption>
+</figure>
+
 <h3 id="5.2-报告生成与导出">5.2 报告生成与导出</h3>
-<ol>
-<li>
-<p>完成测试后，点击顶部菜单栏 <strong>文件 → 导出报告</strong>。</p>
+<ul>
+<li><strong>操作步骤</strong>：</li>
+<li>完成测试后，点击顶部菜单栏 <strong>文件 → 导出报告</strong>。</li>
+<li>在弹出的报告参数窗口中，填写以下信息：<ul>
+<li><code>测试单位</code></li>
+<li><code>装备型号</code></li>
+<li><code>测试人员</code></li>
+<li><code>备注信息</code></li>
+</ul>
 </li>
-<li>
-<p>在弹出的报告参数窗口中，填写以下信息：</p>
-</li>
-<li>
-<p><code>测试单位</code></p>
-</li>
-<li>
-<p><code>装备型号</code></p>
-</li>
-<li>
-<p><code>测试人员</code></p>
-</li>
-<li>
-<p><code>备注信息</code></p>
-</li>
-<li>
-<p>……</p>
-<p><img src="./image/图%205.2.1%20报告参数填写弹窗.png" alt="图 5.2.1 报告参数填写弹窗" width="50%"></p>
-</li>
-</ol>
-<p class="caption"><strong>图 5.2.1 报告参数填写弹窗</strong></p>
-
-<ol>
 <li>点击 <strong>保存</strong>，系统后台自动汇总数据、排版图表并渲染报告。</li>
-</ol>
-<blockquote>
-<p><strong>数据清理</strong>：在查询界面选中文件后点击 <strong>删除</strong>，数据将不可恢复，请谨慎操作。</p>
-</blockquote>
-<hr />
+</ul>
+<figure>
+  <img src="./image/图%205.2.1%20报告参数填写弹窗.png" alt="图 5.2.1 报告参数填写弹窗" width="50%">
+  <figcaption>图 5.2.1 报告参数填写弹窗</figcaption>
+</figure>
+
+<div class="ps-note">
+  <p><strong>PS：</strong>在查询界面选中文件后点击 <strong>删除</strong>，数据将不可恢复，请谨慎操作。</p>
+</div><hr />
 <h2 id="第-6-章-常见问题与故障排除">第 6 章 常见问题与故障排除</h2>
-<h3 id="6.1-高频-FAQ">6.1 高频 FAQ</h3>
-<table>
+<h3 id="6.1-连接与通讯异常">6.1 连接与通讯异常</h3>
+<table class="data-table">
 <thead>
 <tr>
 <th>现象</th>
@@ -464,10 +781,41 @@
 <td>1. 检查黑体电源是否开启<br>2. 打开 <strong>连接助手</strong> 核对串口号与波特率<br>3. 重启软件或重新插拔串口线</td>
 </tr>
 <tr>
+<td>通讯异常 / 无响应</td>
+<td>串口参数不匹配或数据线松动</td>
+<td>1. 检查串口号、波特率等参数是否与硬件实际配置一致<br>2. 检查对应硬件的电源线、串口/USB 数据线是否松动，可用第三方串口调试工具验证硬件是否能正常响应<br>3. 确认无误后，点击 <strong>连接</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="ps-note">
+  <p><strong>PS：</strong>若频繁出现通讯超时，可尝试更换 USB 线、关闭其他占用串口的软件，或重新上电黑体。</p>
+</div><h3 id="6.2-图像与视频问题">6.2 图像与视频问题</h3>
+<table class="data-table">
+<thead>
+<tr>
+<th>现象</th>
+<th>可能原因</th>
+<th>解决步骤</th>
+</tr>
+</thead>
+<tbody>
+<tr>
 <td>图像显示区为黑屏</td>
 <td>视频源未连接或配置错误</td>
 <td>1. 确认视频线连接牢固<br>2. 点击 <strong>重新初始化</strong> 按钮<br>3. 检查相机驱动或视频源配置是否正确</td>
 </tr>
+</tbody>
+</table>
+<h3 id="6.3-测量与计算问题">6.3 测量与计算问题</h3>
+<table class="data-table">
+<thead>
+<tr>
+<th>现象</th>
+<th>可能原因</th>
+<th>解决步骤</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td>MRTD 记录按钮为灰色</td>
 <td>黑体温度未稳定或未完成正负温差记录</td>
@@ -478,9 +826,14 @@
 <td>SITF 斜率失效或镜头未完全遮挡</td>
 <td>1. 重新执行 SITF 测量<br>2. 确认镜头已完全遮挡，无漏光</td>
 </tr>
+<tr>
+<td>SITF 曲线线性区域不明显</td>
+<td>采样步长过大或黑体温度未稳定</td>
+<td>1. 适当减小采样步长<br>2. 等待黑体温度稳定后再开始记录</td>
+</tr>
 </tbody>
 </table>
-<h3 id="6.2-日志查看与故障上报">6.2 日志查看与故障上报</h3>
+<h3 id="6.4-日志查看与故障上报">6.4 日志查看与故障上报</h3>
 <ul>
 <li><strong>日志路径</strong>：软件运行目录下的 <code>Log/logs/</code> 文件夹内，按日期生成 <code>.log</code> 文件（如 <code>Log/logs/2026-06-16.log</code>）。</li>
 <li><strong>日志内容</strong>：包含每次操作的详细记录、硬件通讯原始报文、异常堆栈信息等。</li>
@@ -488,7 +841,7 @@
 </ul>
 <hr />
 <h2 id="第-7-章-获取帮助与反馈">第 7 章 获取帮助与反馈</h2>
-<table>
+<table class="data-table">
 <thead>
 <tr>
 <th>渠道</th>
@@ -502,13 +855,13 @@
 </tr>
 <tr>
 <td><strong>服务热线</strong></td>
-<td><code>[400-XXX-XXXX]</code>（工作日 9:00~17:30）</td>
+<td><code>[400-XXX-XXXX]</code>（工作日 9:00\~17:30）</td>
 </tr>
 </tbody>
 </table>
 <p><strong>问题反馈模板</strong></p>
 <p>为方便快速定位问题，反馈时请尽量提供以下信息：</p>
-<table>
+<table class="data-table">
 <thead>
 <tr>
 <th>序号</th>
@@ -550,6 +903,12 @@
 </tbody>
 </table>
 <hr />
-<p><em>文档版本随 <code>ReportConfigDialog</code> 与 <code>report_sync</code> 行为维护；与之冲突时以源码为准。</em></p>
+<div class="ps-note">
+  <p><strong>PS：</strong>文档版本随 <code>ReportConfigDialog</code> 与 <code>report_sync</code> 行为维护；与之冲突时以源码为准。</p>
+</div>
+    </div>
+  </main>
+</div>
+<a href="#" class="back-to-top" title="返回顶部">↑</a>
 </body>
 </html>
